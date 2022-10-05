@@ -6,12 +6,16 @@ use PHPUnit\Framework\TestCase;
 use Xmark\WhatsappApi\FacebookTransport;
 use Xmark\WhatsappApi\Request\TemplateMessageRequest;
 use Xmark\WhatsappApi\Models\Template;
+use Xmark\WhatsappApi\Models\Component;
+use Xmark\WhatsappApi\Models\ComponentType;
+use Xmark\WhatsappApi\Models\ParameterType;
+use Xmark\WhatsappApi\Models\Parameter;
+use Xmark\WhatsappApi\Models\Text;
 
 class WhatsappApiTest extends TestCase {
 
     public function testSendMessage() {
-
-        $token = "EAAQQMEHgwCUBAH1dhZAqX2XrzyELCBU0IuCuhF0bZAaZCj69h8E7GF5NvGCIHeBrmZAdPje3DrI9c7dIZAPOLzGodwupf5djs5vKBaEno7jX2YADf424JOPvEewf61OqEVwpJqt5pLeO3qCmZCf2BYaZCTnEZBUelwWIKCeZAb3lsZBspUfl4rdLp2oZCBd2NflqP3ohv5SE0LRpeiZAhGmeGS09oXLMQz3qhzcZD";
+        $token = "EAAQQMEHgwCUBADZBa1WmFAkdCyYcYZAqVCSytZBzUYow5GmhMcyL29ZAjLRquNdZCZAIruvly6ZAJBX4SQ3JtMM8xaKhZCmWtQTBWBaHQzI3w8nIR4dK2GZCRVSH5S8UuN4weqeXY2gvshvil8qfw4D3bnc212B2tsBLg9INdnDgbSY6i1NUZBwwDqnObcGu3dp4UxsWdBjD4sTtbdgZBjKTkJ5aJxWvc5P0fAZD";
 
         $to = '6282236255233';
         $template = 'test_template';
@@ -21,8 +25,12 @@ class WhatsappApiTest extends TestCase {
         $request = new TemplateMessageRequest('106243458924743');
 
         $template = new Template();
-        $template->name('test_template')
-                ->lang('id');
+        $template->name('test_with_var')
+                ->lang('id')
+                ->addComponent(
+                    (new Component)->type(ComponentType::Body)
+                                    ->addParameter((new Parameter)->text("rama pradana"))
+                );
 
         $request->to($to)->template($template);
 

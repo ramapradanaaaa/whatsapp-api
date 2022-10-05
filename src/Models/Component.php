@@ -3,9 +3,9 @@
 namespace Xmark\WhatsappApi\Models;
 
 class Component {
-    private string $type;
+    public string $type;
 
-    private array $parameters = array();
+    public array $parameters = array();
 
     public function type(string $type): Component {
         $this->type = $type;
@@ -13,7 +13,7 @@ class Component {
     }
 
     public function addParameter(Parameter $parameter): Component {
-        array_push($this->$parameter, $parameter);
+        array_push($this->parameters, $parameter);
         return $this;
     }
 }

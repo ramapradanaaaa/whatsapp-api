@@ -3,9 +3,9 @@
 namespace Xmark\WhatsappApi\Models;
 
 class Text {
-    private string $body;
+    public string $body;
 
-    private $preview_url = true;
+    public $preview_url = true;
 
 
     public function body(string $body): Text {

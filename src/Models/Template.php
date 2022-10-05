@@ -7,7 +7,7 @@ class Template {
 
     public array $language;
 
-    public array $components;
+    public ?array $components = null;
 
     public function name(string $name): Template {
         $this->name = $name;

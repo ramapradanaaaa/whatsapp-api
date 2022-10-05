@@ -25,6 +25,7 @@
     },
     "require": {
         "guzzlehttp/guzzle": "^7.0",
-        "idearia/php-logger": "^1.4"
+        "idearia/php-logger": "^1.4",
+        "sentry/sdk": "^3.2"
     }
 }

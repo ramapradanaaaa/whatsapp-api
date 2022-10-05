@@ -3,9 +3,9 @@
 namespace Xmark\WhatsappApi\Models;
 
 class Parameter {
-    private string $type;
+    public string $type;
 
-    private Text $text;
+    public string $text;
 
     // private Currency $currency;
 
@@ -17,8 +17,9 @@ class Parameter {
 
     // private Video $video;
 
-    public function text(Text $text): void {
+    public function text(string $text): Parameter {
         $this->text = $text;
         $this->type = ParameterType::Text;
+        return $this;
     }
 }
