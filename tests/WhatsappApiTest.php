@@ -3,18 +3,35 @@
 namespace Tests;
 
 use PHPUnit\Framework\TestCase;
-use Xmark\WhatsappApi\WhatsappApi;
+use Xmark\WhatsappApi\FacebookTransport;
+use Xmark\WhatsappApi\Request\TemplateMessageRequest;
+use Xmark\WhatsappApi\Models\Template;
 
 class WhatsappApiTest extends TestCase {
 
     public function testSendMessage() {
 
-        $token = "EAAQQMEHgwCUBAEYaU6w8UHVeflOOTpn2hAIZBZACRbgCNZAZArAos8d5FASKnhQakpSGZBbYZCa9f1sITnYfEjyndsb5EmodgkowZB5ZBcOPl85ZB8Wpxlh0TF8okXsmedSgegVnk2DQZCVShER3YTcq7qZAk8ba7w0isWeVdbB5ic8xnH9BkzyFiGrcwLAAQZCiYqi3UB9paOZBXdQZDZD";
+        $token = "EAAQQMEHgwCUBAH1dhZAqX2XrzyELCBU0IuCuhF0bZAaZCj69h8E7GF5NvGCIHeBrmZAdPje3DrI9c7dIZAPOLzGodwupf5djs5vKBaEno7jX2YADf424JOPvEewf61OqEVwpJqt5pLeO3qCmZCf2BYaZCTnEZBUelwWIKCeZAb3lsZBspUfl4rdLp2oZCBd2NflqP3ohv5SE0LRpeiZAhGmeGS09oXLMQz3qhzcZD";
 
         $to = '6282236255233';
         $template = 'test_template';
 
-        $api = new WhatsappApi($clientId, $clientSecret);
-        $api->sendMessage($to, $msg);
+        $transport = new FacebookTransport($token);
+
+        $request = new TemplateMessageRequest('106243458924743');
+
+        $template = new Template();
+        $template->name('test_template')
+                ->lang('id');
+
+        $request->to($to)->template($template);
+
+        error_log(json_encode(get_object_vars($request)));
+        try {
+            $transport->send($request);
+        } catch(GuzzleHttp\Exception\RequestException $e) {
+            error_log($e->getMessage());
+        }
+        $this->assertEquals(true, true);
     }
 }

@@ -2,15 +2,13 @@
 
 namespace Xmark\WhatsappApi\Request;
 
-class MessageRequest implements WhatsappApiRequest {
-
-    private string $body;
+class MessageRequest {
 
     private string $from;
 
-    private string $to;
+    public string $to;
 
-    private string $type;
+    public string $messaging_product = 'whatsapp';
 
     public function __construct(string $from) {
         $this->from = $from;
@@ -20,26 +18,12 @@ class MessageRequest implements WhatsappApiRequest {
         return $this->from . '/messages';
     }
 
-    public function body(): string {
-        return $this->body;
-    }
-
     public function method(): string {
         return 'POST';
     }
 
-    public function template(string $to, string $template) {
-        $body = array(
-            "messaging_product" => "whatsapp",
-            'to'                => $to,
-            'type'              => 'template',
-            'template'          => [
-                'name'  => $template,
-                ''
-            ]
-        );
-
-        // $this->body = json_encode($body);
-        $this->body = '{ "messaging_product": "whatsapp", "to": "6282236255233", "type": "template", "template": { "name": "hello_world", "language": { "code": "en_US" } } }';
+    public function to(string $to): MessageRequest {
+        $this->to = $to;
+        return $this;
     }
 }

@@ -1,8 +1,9 @@
 <?php
 
-namespace Xmark\WhatsappApi\Request;
+namespace Xmark\WhatsappApi;
 
 use GuzzleHttp\Client;
+use Xmark\WhatsappApi\Request\MessageRequest;
 
 class FacebookTransport {
     private const BASE_URL = 'https://graph.facebook.com';
@@ -23,17 +24,18 @@ class FacebookTransport {
         return $this::BASE_URL . '/'. $this::DEFAULT_API_VERSION .'/';
     }
 
-    public function send(WhatsappApiRequest $request) {
+    public function send(MessageRequest $request) {
         $client = new Client(['base_uri'  => $this->getApiUrl()]);
 
-        error_log($request->body());
-        $response = $client->request($request->method(), $request->path(), [
-            'header'    => [
+        error_log(json_encode(get_object_vars($request)));
+        $body = [
+            'headers'    => [
                 'Authorization'     => 'Bearer ' . $this->getAccessToken(),
-                'Content-Type'      => 'application/json'
             ],
-            'body'      => $request->body()
-        ]);
+            'json'      => get_object_vars($request)
+        ];
+        error_log(json_encode($body));
+        $response = $client->request($request->method(), $request->path(), $body);
 
         return $response;
     }
