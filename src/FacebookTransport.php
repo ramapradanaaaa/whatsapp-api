@@ -27,14 +27,13 @@ class FacebookTransport {
     public function send(MessageRequest $request) {
         $client = new Client(['base_uri'  => $this->getApiUrl()]);
 
-        error_log(json_encode(get_object_vars($request)));
         $body = [
             'headers'    => [
                 'Authorization'     => 'Bearer ' . $this->getAccessToken(),
             ],
             'json'      => get_object_vars($request)
         ];
-        error_log(json_encode($body));
+        
         $response = $client->request($request->method(), $request->path(), $body);
 
         return $response;
