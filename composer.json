@@ -20,12 +20,9 @@
         }
     ],
     "require-dev": {
-        "phpunit/phpunit": "^8",
-        "donatj/mock-webserver": "^2.5"
+        "phpunit/phpunit": "7"
     },
     "require": {
-        "guzzlehttp/guzzle": "^7.0",
-        "idearia/php-logger": "^1.4",
-        "sentry/sdk": "^3.2"
+        "guzzlehttp/guzzle": "^7.0"
     }
 }

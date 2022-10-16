@@ -24,6 +24,21 @@ class FacebookTransport {
         return $this::BASE_URL . '/'. $this::DEFAULT_API_VERSION .'/';
     }
 
+    public function sendAsync(MessageRequest $request) {
+        $client = new Client(['base_uri'  => $this->getApiUrl()]);
+
+        $body = [
+            'headers'    => [
+                'Authorization'     => 'Bearer ' . $this->getAccessToken(),
+            ],
+            'json'      => get_object_vars($request)
+        ];
+        
+        $response = $client->requestAsync($request->method(), $request->path(), $body);
+
+        return $response;   
+    }
+
     public function send(MessageRequest $request) {
         $client = new Client(['base_uri'  => $this->getApiUrl()]);
 
@@ -36,6 +51,6 @@ class FacebookTransport {
         
         $response = $client->request($request->method(), $request->path(), $body);
 
-        return $response;
+        return $response;   
     }
 }
